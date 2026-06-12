@@ -1,0 +1,12 @@
+{
+  "name": "sdemirbas-ndbs-export-package",
+  "version": "1.0.0",
+  "description": "sdemirbas-ndbs-export-package",
+  "repositoryLayout": {
+    "format": "json",
+    "formatVersion": "6",
+    "keepClient": "false",
+    "metaInformation": ".gctsmetadata/",
+    "tableContent": "true"
+  }
+}

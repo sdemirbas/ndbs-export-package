@@ -12,6 +12,7 @@ define behavior for ZETR_DDL_C_EXP_HEADER
   action releaseToAccounting;
   action ClosedExport;
   action SearchBankAccount;
+  action SaveFobDistribution parameter ZETR_DDL_I_FOB_INPUT;
 
 
 

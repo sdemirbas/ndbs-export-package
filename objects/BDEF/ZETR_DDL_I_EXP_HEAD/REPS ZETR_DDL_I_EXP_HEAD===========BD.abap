@@ -18,6 +18,8 @@ authorization master ( instance )
 
   action releaseToAccounting;
 
+
+
   association _InvoiceHeader { create; }
   association _InvoiceItem { create; }
   association _Texts { create; }

@@ -35,6 +35,8 @@ CLASS lhc_zetr_ddl_i_export_invh DEFINITION INHERITING FROM cl_abap_behavior_han
       IMPORTING keys FOR ACTION zetr_ddl_i_export_invh~getpdf RESULT result.
 
 
+
+
 ENDCLASS.
 
 CLASS lhc_zetr_ddl_i_export_invh IMPLEMENTATION.
@@ -294,6 +296,8 @@ CLASS lhc_zetr_ddl_i_exp_head DEFINITION INHERITING FROM cl_abap_behavior_handle
 ENDCLASS.
 
 CLASS lhc_zetr_ddl_i_exp_head IMPLEMENTATION.
+
+
 
   METHOD earlynumbering_create.
     DATA(ls_mapped)   = mapped.

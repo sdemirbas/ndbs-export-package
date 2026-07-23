@@ -180,6 +180,39 @@
    },
    {
     "TABNAME":"ZETR_T_R102",
+    "FIELDNAME":"FOB",
+    "AS4LOCAL":"N",
+    "AS4VERS":0,
+    "POSITION":11,
+    "KEYFLAG":"",
+    "MANDATORY":"",
+    "ROLLNAME":"",
+    "CHECKTABLE":"",
+    "ADMINFIELD":"0",
+    "INTTYPE":"P",
+    "INTLEN":12,
+    "REFTABLE":"",
+    "PRECFIELD":"",
+    "REFFIELD":"",
+    "CONROUT":"",
+    "NOTNULL":"",
+    "DATATYPE":"DEC",
+    "LENG":23,
+    "DECIMALS":2,
+    "DOMNAME":"",
+    "SHLPORIGIN":"",
+    "TABLETYPE":"",
+    "DEPTH":0,
+    "COMPTYPE":"",
+    "REFTYPE":"",
+    "LANGUFLAG":"",
+    "DBPOSITION":0,
+    "ANONYMOUS":"",
+    "OUTPUTSTYLE":0,
+    "SRS_ID":0
+   },
+   {
+    "TABNAME":"ZETR_T_R102",
     "FIELDNAME":"GEWEI",
     "AS4LOCAL":"N",
     "AS4VERS":0,
@@ -408,6 +441,19 @@
     "ANONYMOUS":"",
     "OUTPUTSTYLE":0,
     "SRS_ID":0
+   }
+  ]
+ },
+ {
+  "table":"DD03T",
+  "data":
+  [
+   {
+    "TABNAME":"ZETR_T_R102",
+    "DDLANGUAGE":"E",
+    "AS4LOCAL":"N",
+    "FIELDNAME":"FOB",
+    "DDTEXT":""
    }
   ]
  },

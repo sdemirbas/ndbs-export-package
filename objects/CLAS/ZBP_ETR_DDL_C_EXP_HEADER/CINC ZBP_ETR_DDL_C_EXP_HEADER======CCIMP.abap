@@ -153,6 +153,197 @@ CLASS lhc_zetr_ddl_c_exp_header IMPLEMENTATION.
 *  ENDMETHOD.
 
 
+*  METHOD savefobdistribution.
+*
+*    TYPES:
+*      BEGIN OF ty_fob_line,
+*        billing_document TYPE string,
+*        fob_amount       TYPE string,
+*      END OF ty_fob_line,
+*
+*      tt_fob_line TYPE STANDARD TABLE OF ty_fob_line
+*        WITH EMPTY KEY.
+*
+*    DATA:
+*      lt_fob_json TYPE tt_fob_line,
+*      lv_json     TYPE string,
+*      lv_total    TYPE decfloat34,
+*      lv_vbeln    TYPE zetr_t_r102-vbeln,
+*      lv_fob_val  TYPE zetr_t_r102-fob.
+*
+*    READ TABLE keys
+*      INTO DATA(ls_key)
+*      INDEX 1.
+*
+*    IF sy-subrc <> 0 OR ls_key IS INITIAL.
+*      RETURN.
+*    ENDIF.
+*
+*    lv_json = ls_key-%param-fobdata.
+*
+*    " JSON -> internal table
+*    /ui2/cl_json=>deserialize(
+*      EXPORTING
+*        json        = lv_json
+*        pretty_name = /ui2/cl_json=>pretty_mode-camel_case
+*      CHANGING
+*        data        = lt_fob_json
+*    ).
+*
+*    " JSON boşsa hata
+*    IF lt_fob_json IS INITIAL.
+*
+*      APPEND VALUE #(
+*        %tky = ls_key-%tky
+*        %msg = new_message(
+*          id       = 'ZETR_EXP'
+*          number   = '010'
+*          severity = if_abap_behv_message=>severity-error
+*        )
+*      ) TO reported-zetr_ddl_c_exp_header.
+*
+*      APPEND VALUE #(
+*        %tky = ls_key-%tky
+*      ) TO failed-zetr_ddl_c_exp_header.
+*
+*      RETURN.
+*
+*    ENDIF.
+*
+*    CLEAR lv_total.
+*
+*    LOOP AT lt_fob_json ASSIGNING FIELD-SYMBOL(<fs_fob>).
+*
+*      CLEAR:
+*        lv_vbeln,
+*        lv_fob_val.
+*
+*      " Fatura numarasını SAP internal formata çevir.
+*      " 90000091 -> 0090000091
+*      lv_vbeln = |{
+*        <fs_fob>-billing_document
+*        ALPHA = IN
+*      }|.
+*
+*      " FOB değerini decimal alana çevir
+*      TRY.
+*
+*          lv_fob_val = CONV #(
+*            <fs_fob>-fob_amount
+*          ).
+*
+*        CATCH cx_sy_conversion_no_number
+*              cx_sy_conversion_overflow.
+*
+*          APPEND VALUE #(
+*            %tky = ls_key-%tky
+*            %msg = new_message_with_text(
+*              severity = if_abap_behv_message=>severity-error
+*              text     = |{
+*                <fs_fob>-billing_document
+*              } faturası için FOB değeri geçersiz.|
+*            )
+*          ) TO reported-zetr_ddl_c_exp_header.
+*
+*          APPEND VALUE #(
+*            %tky = ls_key-%tky
+*          ) TO failed-zetr_ddl_c_exp_header.
+*
+*          RETURN.
+*
+*      ENDTRY.
+*
+*      " Negatif değer kontrolü
+*      IF lv_fob_val < 0.
+*
+*        APPEND VALUE #(
+*          %tky = ls_key-%tky
+*          %msg = new_message_with_text(
+*            severity = if_abap_behv_message=>severity-error
+*            text     = |FOB değeri negatif olamaz: { lv_vbeln }|
+*          )
+*        ) TO reported-zetr_ddl_c_exp_header.
+*
+*        APPEND VALUE #(
+*          %tky = ls_key-%tky
+*        ) TO failed-zetr_ddl_c_exp_header.
+*
+*        RETURN.
+*
+*      ENDIF.
+*
+*      " Yalnızca ALPHA dönüşümü uygulanmış VBELN ile güncelle
+*      UPDATE zetr_t_r102
+*         SET fob = @lv_fob_val
+*       WHERE filen = @ls_key-filen
+*         AND vbeln = @lv_vbeln.
+*
+*      " Kayıt yoksa sessizce devam etme
+*      IF sy-subrc <> 0.
+*
+*        APPEND VALUE #(
+*          %tky = ls_key-%tky
+*          %msg = new_message_with_text(
+*            severity = if_abap_behv_message=>severity-error
+*            text     = |{
+*              lv_vbeln
+*            } numaralı fatura ZETR_T_R102 tablosunda bulunamadı.|
+*          )
+*        ) TO reported-zetr_ddl_c_exp_header.
+*
+*        APPEND VALUE #(
+*          %tky = ls_key-%tky
+*        ) TO failed-zetr_ddl_c_exp_header.
+*
+*        RETURN.
+*
+*      ENDIF.
+*
+*      lv_total = lv_total + lv_fob_val.
+*
+*    ENDLOOP.
+*
+*
+*    DATA lv_shpno TYPE zetr_e_shpno.
+*
+*    lv_shpno = CONV zetr_e_shpno( lv_total ).
+*
+*    UPDATE zetr_t_r101
+*       SET shpno = @lv_shpno
+*     WHERE filen = @ls_key-filen.
+*
+*    IF sy-subrc <> 0.
+*
+*      APPEND VALUE #(
+*        %tky = ls_key-%tky
+*        %msg = new_message_with_text(
+*          severity = if_abap_behv_message=>severity-error
+*          text     = |{
+*            ls_key-filen
+*          } numaralı ihracat dosyası güncellenemedi.|
+*        )
+*      ) TO reported-zetr_ddl_c_exp_header.
+*
+*      APPEND VALUE #(
+*        %tky = ls_key-%tky
+*      ) TO failed-zetr_ddl_c_exp_header.
+*
+*      RETURN.
+*
+*    ENDIF.
+*
+*    APPEND VALUE #(
+*      %tky = ls_key-%tky
+*      %msg = new_message(
+*        id       = 'ZETR_EXP'
+*        number   = '011'
+*        severity = if_abap_behv_message=>severity-success
+*      )
+*    ) TO reported-zetr_ddl_c_exp_header.
+*
+*  ENDMETHOD.
+
+
   METHOD savefobdistribution.
 
     TYPES:
@@ -161,15 +352,27 @@ CLASS lhc_zetr_ddl_c_exp_header IMPLEMENTATION.
         fob_amount       TYPE string,
       END OF ty_fob_line,
 
-      tt_fob_line TYPE STANDARD TABLE OF ty_fob_line
+      BEGIN OF ty_fob_update,
+        vbeln TYPE zetr_t_r102-vbeln,
+        fob   TYPE zetr_t_r102-fob,
+      END OF ty_fob_update,
+
+      tt_fob_line   TYPE STANDARD TABLE OF ty_fob_line
+        WITH EMPTY KEY,
+
+      tt_fob_update TYPE STANDARD TABLE OF ty_fob_update
         WITH EMPTY KEY.
 
     DATA:
-      lt_fob_json TYPE tt_fob_line,
-      lv_json     TYPE string,
-      lv_total    TYPE decfloat34,
-      lv_vbeln    TYPE zetr_t_r102-vbeln,
-      lv_fob_val  TYPE zetr_t_r102-fob.
+      lt_fob_json      TYPE tt_fob_line,
+      lt_fob_update    TYPE tt_fob_update,
+      lv_json          TYPE string,
+      lv_total         TYPE decfloat34,
+      lv_vbeln         TYPE zetr_t_r102-vbeln,
+      lv_fob_val       TYPE zetr_t_r102-fob,
+      lv_current_shpno TYPE zetr_t_r101-shpno,
+      lv_current_total TYPE decfloat34,
+      lv_shpno         TYPE zetr_e_shpno.
 
     READ TABLE keys
       INTO DATA(ls_key)
@@ -210,15 +413,20 @@ CLASS lhc_zetr_ddl_c_exp_header IMPLEMENTATION.
 
     ENDIF.
 
-    CLEAR lv_total.
+    CLEAR:
+      lv_total,
+      lt_fob_update.
 
+    " ─────────────────────────────────────────────────────────────
+    " 1. Aşama: Verileri doğrula ve toplam FOB değerini hesapla
+    " ─────────────────────────────────────────────────────────────
     LOOP AT lt_fob_json ASSIGNING FIELD-SYMBOL(<fs_fob>).
 
       CLEAR:
         lv_vbeln,
         lv_fob_val.
 
-      " Fatura numarasını SAP internal formata çevir.
+      " Fatura numarasını SAP internal formata çevir
       " 90000091 -> 0090000091
       lv_vbeln = |{
         <fs_fob>-billing_document
@@ -272,13 +480,13 @@ CLASS lhc_zetr_ddl_c_exp_header IMPLEMENTATION.
 
       ENDIF.
 
-      " Yalnızca ALPHA dönüşümü uygulanmış VBELN ile güncelle
-      UPDATE zetr_t_r102
-         SET fob = @lv_fob_val
-       WHERE filen = @ls_key-filen
-         AND vbeln = @lv_vbeln.
+      " Faturanın tabloda olup olmadığını güncellemeden kontrol et
+      SELECT SINGLE @abap_true
+        FROM zetr_t_r102
+        WHERE filen = @ls_key-filen
+          AND vbeln = @lv_vbeln
+        INTO @DATA(lv_invoice_exists).
 
-      " Kayıt yoksa sessizce devam etme
       IF sy-subrc <> 0.
 
         APPEND VALUE #(
@@ -299,13 +507,97 @@ CLASS lhc_zetr_ddl_c_exp_header IMPLEMENTATION.
 
       ENDIF.
 
+      APPEND VALUE #(
+        vbeln = lv_vbeln
+        fob   = lv_fob_val
+      ) TO lt_fob_update.
+
       lv_total = lv_total + lv_fob_val.
 
     ENDLOOP.
 
+    " ─────────────────────────────────────────────────────────────
+    " 2. Aşama: R101 üzerindeki mevcut SHPNO değerini kontrol et
+    " ─────────────────────────────────────────────────────────────
+    SELECT SINGLE shpno
+      FROM zetr_t_r101
+      WHERE filen = @ls_key-filen
+      INTO @lv_current_shpno.
 
-    DATA lv_shpno TYPE zetr_e_shpno.
+    IF sy-subrc <> 0.
 
+      APPEND VALUE #(
+        %tky = ls_key-%tky
+        %msg = new_message_with_text(
+          severity = if_abap_behv_message=>severity-error
+          text     = |{
+            ls_key-filen
+          } numaralı ihracat dosyası ZETR_T_R101 tablosunda bulunamadı.|
+        )
+      ) TO reported-zetr_ddl_c_exp_header.
+
+      APPEND VALUE #(
+        %tky = ls_key-%tky
+      ) TO failed-zetr_ddl_c_exp_header.
+
+      RETURN.
+
+    ENDIF.
+
+    lv_current_total = CONV decfloat34( lv_current_shpno ).
+
+    " Mevcut SHPNO, girilen FOB toplamından büyükse işlemi durdur
+    IF  lv_total > lv_current_total .
+
+      APPEND VALUE #(
+        %tky = ls_key-%tky
+        %msg = new_message_with_text(
+          severity = if_abap_behv_message=>severity-error
+          text     = |Mevcut FOB$ değerinden büyük değer girilemez.|
+        )
+      ) TO reported-zetr_ddl_c_exp_header.
+
+      APPEND VALUE #(
+        %tky = ls_key-%tky
+      ) TO failed-zetr_ddl_c_exp_header.
+
+      RETURN.
+
+    ENDIF.
+
+    " ─────────────────────────────────────────────────────────────
+    " 3. Aşama: Kontroller başarılıysa R102 kayıtlarını güncelle
+    " ─────────────────────────────────────────────────────────────
+    LOOP AT lt_fob_update ASSIGNING FIELD-SYMBOL(<fs_update>).
+
+      UPDATE zetr_t_r102
+         SET fob = @<fs_update>-fob
+       WHERE filen = @ls_key-filen
+         AND vbeln = @<fs_update>-vbeln.
+
+      IF sy-subrc <> 0.
+
+        APPEND VALUE #(
+          %tky = ls_key-%tky
+          %msg = new_message_with_text(
+            severity = if_abap_behv_message=>severity-error
+            text     = |{
+              <fs_update>-vbeln
+            } numaralı faturanın FOB değeri güncellenemedi.|
+          )
+        ) TO reported-zetr_ddl_c_exp_header.
+
+        APPEND VALUE #(
+          %tky = ls_key-%tky
+        ) TO failed-zetr_ddl_c_exp_header.
+
+        RETURN.
+
+      ENDIF.
+
+    ENDLOOP.
+
+    " Toplam FOB değerini R101-SHPNO alanına yaz
     lv_shpno = CONV zetr_e_shpno( lv_total ).
 
     UPDATE zetr_t_r101
@@ -342,7 +634,6 @@ CLASS lhc_zetr_ddl_c_exp_header IMPLEMENTATION.
     ) TO reported-zetr_ddl_c_exp_header.
 
   ENDMETHOD.
-
 
 ENDCLASS.
 

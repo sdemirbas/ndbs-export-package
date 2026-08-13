@@ -12,7 +12,7 @@
     "SOURCE":"@EndUserText.label: 'FOB Distribution Input'\r\ndefine abstract entity ZETR_DDL_I_FOB_INPUT\r\n{\r\n  FobData          : abap.string(0); // JSON string: [{\"BillingDocument\":\"...\",\"FobAmount\":\"5000.000\"},...]\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"35",
+    "CHGFLAG":",4",
     "SOURCE_TYPE":"A",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

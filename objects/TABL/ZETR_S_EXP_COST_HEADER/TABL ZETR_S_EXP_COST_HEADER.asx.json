@@ -517,7 +517,7 @@
     "KEYFLAG":"",
     "MANDATORY":"",
     "ROLLNAME":"STGRD",
-    "CHECKTABLE":"*",
+    "CHECKTABLE":"",
     "ADMINFIELD":"1",
     "INTTYPE":"C",
     "INTLEN":4,

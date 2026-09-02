@@ -9,10 +9,10 @@
     "AS4USER":"SAP_CUSTOMER",
     "AS4DATE":"0000-00-00",
     "AS4TIME":"00:00:00",
-    "SOURCE":"@EndUserText.label: 'Export Document Invoice Header'\r\n@Metadata.allowExtensions: true\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\ndefine view entity ZETR_DDL_C_EXP_INVH\r\n  as projection on ZETR_DDL_I_EXPORT_INVH\r\n{\r\n          //@OData.property.name: 'filen'\r\n  key     FileExportNumber,\r\n  key     BillingDocument,\r\n          filen,\r\n          extfn,\r\n          trnty,\r\n          trnty_txt,\r\n          bldat,\r\n          erdat,\r\n          ernam,\r\n          clsed,\r\n          Shpno,\r\n\r\n          rexdt,\r\n          extco,\r\n          Desco,\r\n          Cofrp,\r\n          Cedno,\r\n          Plaka,\r\n          brgew,\r\n          ntgew,\r\n\r\n          descotext,\r\n          Extcotext,\r\n\r\n          @ObjectModel.text.element: [ 'CompanyCodeName' ]\r\n          CompanyCode,\r\n          CompanyCodeName,\r\n          BillingDocumentType,\r\n          BillingDocumentTypeName,\r\n          SalesOrganization,\r\n          SalesOrganizationName,\r\n          DistributionChannel,\r\n          DistributionChannelName,\r\n          Division,\r\n          DivisionName,\r\n          PayerParty as kunrg,\r\n          PayerPartyName,\r\n          SoldToParty,\r\n          SoldToPartyName,\r\n          TotalNetAmount,\r\n          TotalTaxAmount,\r\n          TransactionCurrency,\r\n          BillingDocumentDate,\r\n          DocumentReferenceID,\r\n          CustomerPaymentTerms,\r\n          CustomerPaymentTermsName,\r\n          IncotermsClassification,\r\n          IncotermsTransferLocation,\r\n          IncotermsVersion,\r\n          CreationDate,\r\n          CreationTime,\r\n          CreatedByUser,\r\n          AccountingTransferStatus,\r\n          AccountingTransferStatusText,\r\n          @EndUserText.label: 'Toplam Tutar'\r\n          TotalSubtotalAmount,\r\n          Subtotal1Amount,\r\n          Subtotal2Amount,\r\n          Subtotal3Amount,\r\n          Subtotal4Amount,\r\n          Subtotal5Amount,\r\n          Subtotal6Amount,\r\n          @ObjectModel.virtualElementCalculatedBy: 'ABAP:ZETR_CL_EXP_VIRTUAL'\r\n          @EndUserText.label: 'Beyanname'\r\n  virtual beyanname : abap.char(30),\r\n          @ObjectModel.virtualElementCalculatedBy: 'ABAP:ZETR_CL_EXP_VIRTUAL'\r\n          @EndUserText.label: 'Yük'\r\n  virtual yuk       : abap.char(50),\r\n          _ExportFile : redirected to parent ZETR_DDL_C_EXP_HEADER\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"ZETR_DDL_I_EXPORT_INVH\"\n],\n\"ASSOCIATED\":\n[\n\"ZETR_DDL_C_EXP_HEADER\",\n\"ZETR_DDL_I_EXP_HEAD\"\n],\n\"BASE\":\n[\n\"ZETR_DDL_I_EXPORT_INVH\"\n],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
+    "SOURCE":"@EndUserText.label: 'Export Document Invoice Header'\r\n@Metadata.allowExtensions: true\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\ndefine view entity ZETR_DDL_C_EXP_INVH\r\n  as projection on ZETR_DDL_I_EXPORT_INVH\r\n{\r\n          //@OData.property.name: 'filen'\r\n  key     FileExportNumber,\r\n  key     BillingDocument,\r\n          filen,\r\n          extfn,\r\n          trnty,\r\n          trnty_txt,\r\n          bldat,\r\n          erdat,\r\n          ernam,\r\n          clsed,\r\n          Shpno,\r\n\r\n          rexdt,\r\n          extco,\r\n          Desco,\r\n          Cofrp,\r\n          Cedno,\r\n          Plaka,\r\n          brgew,\r\n          ntgew,\r\n\r\n          descotext,\r\n          Extcotext,\r\n\r\n          @ObjectModel.text.element: [ 'CompanyCodeName' ]\r\n          CompanyCode,\r\n          CompanyCodeName,\r\n          BillingDocumentType,\r\n          BillingDocumentTypeName,\r\n          SalesOrganization,\r\n          SalesOrganizationName,\r\n          DistributionChannel,\r\n          DistributionChannelName,\r\n          Division,\r\n          DivisionName,\r\n          PayerParty as kunrg,\r\n          PayerPartyName,\r\n          SoldToParty,\r\n          SoldToPartyName,\r\n          TotalNetAmount,\r\n          TotalTaxAmount,\r\n          TransactionCurrency,\r\n          BillingDocumentDate,\r\n          DocumentReferenceID,\r\n          CustomerPaymentTerms,\r\n          CustomerPaymentTermsName,\r\n          IncotermsClassification,\r\n          IncotermsTransferLocation,\r\n          IncotermsVersion,\r\n          CreationDate,\r\n          CreationTime,\r\n          CreatedByUser,\r\n          AccountingTransferStatus,\r\n          AccountingTransferStatusText,\r\n          @EndUserText.label: 'Toplam Tutar'\r\n          TotalSubtotalAmount,\r\n          Subtotal1Amount,\r\n          Subtotal2Amount,\r\n          Subtotal3Amount,\r\n          Subtotal4Amount,\r\n          Subtotal5Amount,\r\n          Subtotal6Amount,\r\n          @ObjectModel.virtualElementCalculatedBy: 'ABAP:ZETR_CL_EXP_VIRTUAL'\r\n          @EndUserText.label: 'Beyanname'\r\n  virtual beyanname   : abap.char(30),\r\n          @ObjectModel.virtualElementCalculatedBy: 'ABAP:ZETR_CL_EXP_VIRTUAL'\r\n          @EndUserText.label: 'Yük'\r\n  virtual yuk         : abap.char(50),\r\n\r\n          @ObjectModel.virtualElementCalculatedBy: 'ABAP:ZETR_CL_EXP_VIRTUAL'\r\n          @EndUserText.label: 'İthalat İade'\r\n  virtual ithalatiade : abap.char(1),\r\n          _ExportFile : redirected to parent ZETR_DDL_C_EXP_HEADER\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"ZETR_DDL_I_EXPORT_INVH\"\n],\n\"ASSOCIATED\":\n[\n\"ZETR_DDL_C_EXP_HEADER\",\n\"ZETR_DDL_I_EXP_HEAD\"\n],\n\"BASE\":\n[\n\"ZETR_DDL_I_EXPORT_INVH\"\n],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"76",
+    "CHGFLAG":"7",
     "SOURCE_TYPE":"P",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"
@@ -46,6 +46,18 @@
     "DEPTH":0,
     "DDTEXT":"",
     "FIELDLABEL":"Beyanname",
+    "QUICKINFO":""
+   },
+   {
+    "DDLNAME":"ZETR_DDL_C_EXP_INVH",
+    "STRUCOBJN":"ZETR_DDL_C_EXP_INVH",
+    "NODENAME":".NODE1",
+    "DDLANGUAGE":"E",
+    "AS4LOCAL":"N",
+    "FIELDNAME":"ITHALATIADE",
+    "DEPTH":0,
+    "DDTEXT":"",
+    "FIELDLABEL":"İthalat İade",
     "QUICKINFO":""
    },
    {
@@ -131,6 +143,34 @@
     "NAME":"OBJECTMODEL.TEXT.ELEMENT$1$",
     "POSITION":4,
     "VALUE":"'CompanyCodeName'"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_C_EXP_INVH",
+    "LFIELDNAME":"ITHALATIADE",
+    "NAME":"ENDUSERTEXT",
+    "POSITION":17,
+    "VALUE":""
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_C_EXP_INVH",
+    "LFIELDNAME":"ITHALATIADE",
+    "NAME":"ENDUSERTEXT.LABEL",
+    "POSITION":18,
+    "VALUE":"'İthalat İade'"
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_C_EXP_INVH",
+    "LFIELDNAME":"ITHALATIADE",
+    "NAME":"OBJECTMODEL",
+    "POSITION":15,
+    "VALUE":""
+   },
+   {
+    "STRUCOBJN":"ZETR_DDL_C_EXP_INVH",
+    "LFIELDNAME":"ITHALATIADE",
+    "NAME":"OBJECTMODEL.VIRTUALELEMENTCALCULATEDBY",
+    "POSITION":16,
+    "VALUE":"'ABAP:ZETR_CL_EXP_VIRTUAL'"
    },
    {
     "STRUCOBJN":"ZETR_DDL_C_EXP_INVH",

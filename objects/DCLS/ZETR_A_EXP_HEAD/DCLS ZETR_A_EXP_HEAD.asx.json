@@ -8,8 +8,8 @@
     "AS4LOCAL":"A",
     "AS4USER":"SAP_CUSTOMER",
     "AS4DATE":"2026-09-28",
-    "AS4TIME":"09:04:32",
-    "SOURCE":"@MappingRole: true\ndefine role ZETR_A_EXP_HEAD {\n  grant\n    select\n  on ZETR_DDL_I_EXP_HEAD\n    where ( Bukrs ) = aspect pfcg_auth( ZETR_BUK, ZETR_BUKRS, ACTVT = '01,02,03,06' );\n}\n",
+    "AS4TIME":"16:59:35",
+    "SOURCE":"@MappingRole: true\ndefine role ZETR_A_EXP_HEAD {\n  grant\n    select\n  on ZETR_DDL_I_EXP_HEAD\n    where ( Bukrs ) = aspect pfcg_auth( ZETR_BUK, ZETR_BUKRS, ACTVT = '03' );\n\n  grant\n    select\n  on ZETR_DDL_C_EXP_HEADER\n    where inheriting conditions from entity ZETR_DDL_I_EXP_HEAD;\n}\n",
     "PARENTNAME":"",
     "ABAP_LANGUAGE_VERSION":"5"
    }

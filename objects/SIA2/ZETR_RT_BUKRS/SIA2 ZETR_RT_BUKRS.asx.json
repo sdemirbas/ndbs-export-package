@@ -10,7 +10,7 @@
     "CREATE_USER":"SAP_CUSTOMER",
     "CREATE_TIMESTAMP":"+020260928120543",
     "CHANGE_USER":"SAP_CUSTOMER",
-    "CHANGE_TIMESTAMP":"+020260928123957"
+    "CHANGE_TIMESTAMP":"+020260928171920"
    }
   ]
  },
@@ -22,6 +22,16 @@
     "RTYPE_ID":"ZETR_RT_BUKRS",
     "FIELD_NAME":"ZETR_RF_BUKRS",
     "SORT_ORDER":1
+   }
+  ]
+ },
+ {
+  "table":"APS_IAM_W_RT_AO",
+  "data":
+  [
+   {
+    "RTYPE_ID":"ZETR_RT_BUKRS",
+    "AUTH_OBJECT":"ZETR_BUK"
    }
   ]
  },

@@ -1,5 +1,15 @@
 [
  {
+  "table":"TACTZ",
+  "data":
+  [
+   {
+    "BROBJ":"ZETR_BUK",
+    "ACTVT":"03"
+   }
+  ]
+ },
+ {
   "table":"TADIR",
   "data":
   [
@@ -86,7 +96,7 @@
     "OBJCT":"ZETR_BUK",
     "MODIFIER":"SAP_CUSTOMER",
     "MODDATE":"2026-09-28",
-    "MODTIME":"08:29:13",
+    "MODTIME":"17:22:48",
     "ABAP_LANGUAGE_VERSION":"5"
    }
   ]

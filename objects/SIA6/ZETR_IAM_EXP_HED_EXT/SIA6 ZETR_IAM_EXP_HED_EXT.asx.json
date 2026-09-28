@@ -22,8 +22,52 @@
     "CREATE_USER":"SAP_CUSTOMER",
     "CREATE_TIMESTAMP":"+020240215102301",
     "CHANGE_USER":"SAP_CUSTOMER",
-    "CHANGE_TIMESTAMP":"+020240215105817",
-    "RTYPE_MIG_STATUS":""
+    "CHANGE_TIMESTAMP":"+020260928172547",
+    "RTYPE_MIG_STATUS":"3"
+   }
+  ]
+ },
+ {
+  "table":"APS_IAM_W_APPAUI",
+  "data":
+  [
+   {
+    "APP_ID":"ZETR_IAM_EXP_HED_EXT",
+    "UUID":"+hY+u89+H+Gu7CnpgMiraw==",
+    "AUTH_OBJECT":"ZETR_BUK",
+    "AUTH_OBJECT_INST_ID":1,
+    "IBS_SOURCE":"",
+    "STATUS":"U",
+    "INACTIVE":"",
+    "COPIED":"",
+    "IBS_SOURCE_TYPE":""
+   }
+  ]
+ },
+ {
+  "table":"APS_IAM_W_APPAUO",
+  "data":
+  [
+   {
+    "APP_ID":"ZETR_IAM_EXP_HED_EXT",
+    "AUTH_OBJECT":"ZETR_BUK",
+    "STATUS":"U"
+   }
+  ]
+ },
+ {
+  "table":"APS_IAM_W_APPAUV",
+  "data":
+  [
+   {
+    "APP_ID":"ZETR_IAM_EXP_HED_EXT",
+    "UUID":"+hY+u89+H+Gu7DSWvM0raw==",
+    "PARENT_ID":"+hY+u89+H+Gu7CnpgMiraw==",
+    "FIELD":"ZETR_BUKRS",
+    "LOW_VALUE":"",
+    "HIGH_VALUE":"",
+    "STATUS":"U",
+    "COPIED":""
    }
   ]
  },
@@ -48,6 +92,23 @@
     "LANGU":"E",
     "APP_ID":"ZETR_IAM_EXP_HED_EXT",
     "TEXT":"eSolution - Export"
+   }
+  ]
+ },
+ {
+  "table":"APS_IAM_W_APP_RT",
+  "data":
+  [
+   {
+    "APP_ID":"ZETR_IAM_EXP_HED_EXT",
+    "RESTRICTION_TYPE_ID":"ZETR_RT_BUKRS",
+    "READ_ACCESS":"X",
+    "WRITE_ACCESS":"X",
+    "F4_ACCESS":"",
+    "INACTIVE":"",
+    "READ_ACCESS_STATUS":"",
+    "WRITE_ACCESS_STATUS":"",
+    "F4_ACCESS_STATUS":""
    }
   ]
  },

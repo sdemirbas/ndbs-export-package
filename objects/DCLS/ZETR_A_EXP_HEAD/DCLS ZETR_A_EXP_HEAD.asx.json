@@ -1,0 +1,60 @@
+[
+ {
+  "table":"ACMDCLSRC",
+  "data":
+  [
+   {
+    "DCLNAME":"ZETR_A_EXP_HEAD",
+    "AS4LOCAL":"A",
+    "AS4USER":"SAP_CUSTOMER",
+    "AS4DATE":"2026-09-28",
+    "AS4TIME":"09:04:32",
+    "SOURCE":"@MappingRole: true\ndefine role ZETR_A_EXP_HEAD {\n  grant\n    select\n  on ZETR_DDL_I_EXP_HEAD\n    where ( Bukrs ) = aspect pfcg_auth( ZETR_BUK, ZETR_BUKRS, ACTVT = '01,02,03,06' );\n}\n",
+    "PARENTNAME":"",
+    "ABAP_LANGUAGE_VERSION":"5"
+   }
+  ]
+ },
+ {
+  "table":"ACMDCLSRCT",
+  "data":
+  [
+   {
+    "DCLNAME":"ZETR_A_EXP_HEAD",
+    "DCLLANGUAGE":"E",
+    "AS4LOCAL":"A",
+    "DDTEXT":"Export Document Header - Company Code Access"
+   }
+  ]
+ },
+ {
+  "table":"TADIR",
+  "data":
+  [
+   {
+    "PGMID":"R3TR",
+    "OBJECT":"DCLS",
+    "OBJ_NAME":"ZETR_A_EXP_HEAD",
+    "KORRNUM":"",
+    "SRCSYSTEM":"...",
+    "AUTHOR":"SAP_CUSTOMER",
+    "SRCDEP":"",
+    "DEVCLASS":"ZETR_EXPORT",
+    "GENFLAG":"",
+    "EDTFLAG":"",
+    "CPROJECT":" L",
+    "MASTERLANG":"E",
+    "VERSID":"",
+    "PAKNOCHECK":"",
+    "OBJSTABLTY":"",
+    "COMPONENT":"",
+    "CRELEASE":"",
+    "DELFLAG":"",
+    "TRANSLTTXT":"",
+    "CREATED_ON":"2026-09-28",
+    "CHECK_DATE":"2026-09-28",
+    "CHECK_CFG":""
+   }
+  ]
+ }
+]

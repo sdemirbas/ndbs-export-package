@@ -22,7 +22,7 @@
     "CREATE_USER":"SAP_CUSTOMER",
     "CREATE_TIMESTAMP":"+020240215102301",
     "CHANGE_USER":"SAP_CUSTOMER",
-    "CHANGE_TIMESTAMP":"+020260928172547",
+    "CHANGE_TIMESTAMP":"+020260929075621",
     "RTYPE_MIG_STATUS":"3"
    }
   ]
@@ -61,10 +61,20 @@
   [
    {
     "APP_ID":"ZETR_IAM_EXP_HED_EXT",
-    "UUID":"+hY+u89+H+Gu7DSWvM0raw==",
+    "UUID":"+hY+u89+H+Gu+2hFy+cLbg==",
     "PARENT_ID":"+hY+u89+H+Gu7CnpgMiraw==",
     "FIELD":"ZETR_BUKRS",
     "LOW_VALUE":"",
+    "HIGH_VALUE":"",
+    "STATUS":"U",
+    "COPIED":""
+   },
+   {
+    "APP_ID":"ZETR_IAM_EXP_HED_EXT",
+    "UUID":"+hY+u89+H+Gu+2hFy+crbg==",
+    "PARENT_ID":"+hY+u89+H+Gu7CnpgMiraw==",
+    "FIELD":"ACTVT",
+    "LOW_VALUE":"03",
     "HIGH_VALUE":"",
     "STATUS":"U",
     "COPIED":""

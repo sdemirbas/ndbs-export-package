@@ -293,6 +293,31 @@ CLASS lhc_zetr_ddl_i_exp_head DEFINITION INHERITING FROM cl_abap_behavior_handle
     METHODS earlynumbering_create FOR NUMBERING
       IMPORTING entities FOR CREATE zetr_ddl_i_exp_head.
 
+    METHODS precheck_create FOR PRECHECK
+      IMPORTING entities FOR CREATE zetr_ddl_i_exp_head.
+    METHODS precheck_update FOR PRECHECK
+      IMPORTING entities FOR UPDATE zetr_ddl_i_exp_head.
+
+    CONSTANTS: BEGIN OF cs_actvt,
+                 create  TYPE c LENGTH 2 VALUE '01',
+                 change  TYPE c LENGTH 2 VALUE '02',
+                 delete  TYPE c LENGTH 2 VALUE '06',
+                 release TYPE c LENGTH 2 VALUE '10',
+               END OF cs_actvt.
+
+    TYPES: BEGIN OF ty_auth_cache,
+             bukrs TYPE zetr_ddl_i_exp_head-bukrs,
+             actvt LIKE cs_actvt-change,
+             auth  LIKE if_abap_behv=>auth-allowed,
+           END OF ty_auth_cache.
+
+    DATA mt_auth_cache TYPE SORTED TABLE OF ty_auth_cache WITH UNIQUE KEY bukrs actvt.
+
+    METHODS check_company_code
+      IMPORTING iv_bukrs       TYPE zetr_ddl_i_exp_head-bukrs
+                iv_actvt       LIKE cs_actvt-change
+      RETURNING VALUE(rv_auth) LIKE if_abap_behv=>auth-allowed.
+
 ENDCLASS.
 
 CLASS lhc_zetr_ddl_i_exp_head IMPLEMENTATION.
@@ -341,8 +366,58 @@ CLASS lhc_zetr_ddl_i_exp_head IMPLEMENTATION.
 
   ENDMETHOD.
   METHOD get_instance_authorizations.
+    READ ENTITIES OF zetr_ddl_i_exp_head IN LOCAL MODE
+      ENTITY zetr_ddl_i_exp_head
+      FIELDS ( bukrs )
+      WITH CORRESPONDING #( keys )
+      RESULT DATA(lt_head)
+      FAILED DATA(ls_read_failed).
 
+    failed-zetr_ddl_i_exp_head = CORRESPONDING #( ls_read_failed-zetr_ddl_i_exp_head ).
 
+    LOOP AT lt_head ASSIGNING FIELD-SYMBOL(<ls_head>).
+      APPEND VALUE #( %tky = <ls_head>-%tky ) TO result ASSIGNING FIELD-SYMBOL(<ls_result>).
+
+      IF requested_authorizations-%update = if_abap_behv=>mk-on.
+        <ls_result>-%update = check_company_code( iv_bukrs = <ls_head>-bukrs
+                                                  iv_actvt = cs_actvt-change ).
+      ENDIF.
+
+      IF requested_authorizations-%delete = if_abap_behv=>mk-on.
+        <ls_result>-%delete = check_company_code( iv_bukrs = <ls_head>-bukrs
+                                                  iv_actvt = cs_actvt-delete ).
+      ENDIF.
+
+      IF requested_authorizations-%action-releasetoaccounting = if_abap_behv=>mk-on.
+        <ls_result>-%action-releasetoaccounting = check_company_code( iv_bukrs = <ls_head>-bukrs
+                                                                      iv_actvt = cs_actvt-release ).
+      ENDIF.
+
+      IF requested_authorizations-%assoc-_invoiceheader = if_abap_behv=>mk-on.
+        <ls_result>-%assoc-_invoiceheader = check_company_code( iv_bukrs = <ls_head>-bukrs
+                                                                iv_actvt = cs_actvt-change ).
+      ENDIF.
+
+      IF requested_authorizations-%assoc-_invoiceitem = if_abap_behv=>mk-on.
+        <ls_result>-%assoc-_invoiceitem = check_company_code( iv_bukrs = <ls_head>-bukrs
+                                                              iv_actvt = cs_actvt-change ).
+      ENDIF.
+
+      IF requested_authorizations-%assoc-_texts = if_abap_behv=>mk-on.
+        <ls_result>-%assoc-_texts = check_company_code( iv_bukrs = <ls_head>-bukrs
+                                                        iv_actvt = cs_actvt-change ).
+      ENDIF.
+
+      IF requested_authorizations-%assoc-_billingdocument = if_abap_behv=>mk-on.
+        <ls_result>-%assoc-_billingdocument = check_company_code( iv_bukrs = <ls_head>-bukrs
+                                                                  iv_actvt = cs_actvt-change ).
+      ENDIF.
+
+      IF requested_authorizations-%assoc-_costing = if_abap_behv=>mk-on.
+        <ls_result>-%assoc-_costing = check_company_code( iv_bukrs = <ls_head>-bukrs
+                                                          iv_actvt = cs_actvt-change ).
+      ENDIF.
+    ENDLOOP.
   ENDMETHOD.
 
   METHOD releasetoaccounting.
@@ -427,6 +502,89 @@ CLASS lhc_zetr_ddl_i_exp_head IMPLEMENTATION.
 *      APPEND ls_reported TO  reported-zetr_ddl_i_exp_head.
 *    ENDLOOP.
 
+  ENDMETHOD.
+
+  METHOD precheck_create.
+    LOOP AT entities ASSIGNING FIELD-SYMBOL(<ls_entity>).
+      IF <ls_entity>-bukrs IS INITIAL.
+        APPEND VALUE #( %cid        = <ls_entity>-%cid
+                        %create     = if_abap_behv=>mk-on
+                        %fail-cause = if_abap_behv=>cause-unauthorized ) TO failed-zetr_ddl_i_exp_head.
+
+        APPEND VALUE #( %cid            = <ls_entity>-%cid
+                        %create         = if_abap_behv=>mk-on
+                        %element-bukrs  = if_abap_behv=>mk-on
+                        %msg            = new_message_with_text( severity = if_abap_behv_message=>severity-error
+                                                                 text     = |Şirket kodu boş bırakılamaz| ) ) TO reported-zetr_ddl_i_exp_head.
+        CONTINUE.
+      ENDIF.
+
+      IF check_company_code( iv_bukrs = <ls_entity>-bukrs
+                             iv_actvt = cs_actvt-create ) = if_abap_behv=>auth-allowed.
+        CONTINUE.
+      ENDIF.
+
+      APPEND VALUE #( %cid        = <ls_entity>-%cid
+                      %create     = if_abap_behv=>mk-on
+                      %fail-cause = if_abap_behv=>cause-unauthorized ) TO failed-zetr_ddl_i_exp_head.
+
+      APPEND VALUE #( %cid            = <ls_entity>-%cid
+                      %create         = if_abap_behv=>mk-on
+                      %element-bukrs  = if_abap_behv=>mk-on
+                      %msg            = new_message_with_text( severity = if_abap_behv_message=>severity-error
+                                                               text     = |Şirket kodu { <ls_entity>-bukrs } için yetkiniz yok| ) ) TO reported-zetr_ddl_i_exp_head.
+    ENDLOOP.
+  ENDMETHOD.
+
+  METHOD precheck_update.
+    LOOP AT entities ASSIGNING FIELD-SYMBOL(<ls_entity>) WHERE %control-bukrs = if_abap_behv=>mk-on.
+      IF <ls_entity>-bukrs IS INITIAL.
+        APPEND VALUE #( %tky        = <ls_entity>-%tky
+                        %update     = if_abap_behv=>mk-on
+                        %fail-cause = if_abap_behv=>cause-unauthorized ) TO failed-zetr_ddl_i_exp_head.
+
+        APPEND VALUE #( %tky            = <ls_entity>-%tky
+                        %update         = if_abap_behv=>mk-on
+                        %element-bukrs  = if_abap_behv=>mk-on
+                        %msg            = new_message_with_text( severity = if_abap_behv_message=>severity-error
+                                                                 text     = |Şirket kodu boş bırakılamaz| ) ) TO reported-zetr_ddl_i_exp_head.
+        CONTINUE.
+      ENDIF.
+
+      IF check_company_code( iv_bukrs = <ls_entity>-bukrs
+                             iv_actvt = cs_actvt-change ) = if_abap_behv=>auth-allowed.
+        CONTINUE.
+      ENDIF.
+
+      APPEND VALUE #( %tky        = <ls_entity>-%tky
+                      %update     = if_abap_behv=>mk-on
+                      %fail-cause = if_abap_behv=>cause-unauthorized ) TO failed-zetr_ddl_i_exp_head.
+
+      APPEND VALUE #( %tky            = <ls_entity>-%tky
+                      %update         = if_abap_behv=>mk-on
+                      %element-bukrs  = if_abap_behv=>mk-on
+                      %msg            = new_message_with_text( severity = if_abap_behv_message=>severity-error
+                                                               text     = |Şirket kodu { <ls_entity>-bukrs } için yetkiniz yok| ) ) TO reported-zetr_ddl_i_exp_head.
+    ENDLOOP.
+  ENDMETHOD.
+
+  METHOD check_company_code.
+    ASSIGN mt_auth_cache[ bukrs = iv_bukrs actvt = iv_actvt ] TO FIELD-SYMBOL(<ls_cache>).
+    IF sy-subrc = 0.
+      rv_auth = <ls_cache>-auth.
+      RETURN.
+    ENDIF.
+
+    AUTHORITY-CHECK OBJECT 'F_BKPF_BUK'
+      ID 'BUKRS' FIELD iv_bukrs
+      ID 'ACTVT' FIELD iv_actvt.
+
+    rv_auth = COND #( WHEN sy-subrc = 0 THEN if_abap_behv=>auth-allowed
+                                        ELSE if_abap_behv=>auth-unauthorized ).
+
+    INSERT VALUE #( bukrs = iv_bukrs
+                    actvt = iv_actvt
+                    auth  = rv_auth ) INTO TABLE mt_auth_cache.
   ENDMETHOD.
 
 ENDCLASS.

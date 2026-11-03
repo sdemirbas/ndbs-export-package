@@ -9,10 +9,10 @@
     "AS4USER":"SAP_CUSTOMER",
     "AS4DATE":"0000-00-00",
     "AS4TIME":"00:00:00",
-    "SOURCE":"@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'Export Document Header Collocutor'\r\ndefine view entity ZETR_DDL_I_EXP_collocutor\r\n  as select from zetr_t_r101\r\n  association to parent ZETR_DDL_I_EXP_HEAD as _Header on $projection.Filen = _Header.Filen\r\n\r\n{\r\n  key filen as Filen,\r\n      kunrg as Kunrg,\r\n      cusof as Cusof,\r\n      shpfr as Shpfr,\r\n      brofr as Brofr,\r\n      cofrp as Cofrp,\r\n      sfrrp as Sfrrp,\r\n      bfrrp as Bfrrp,\r\n      _Header\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"ZETR_T_R101\"\n],\n\"ASSOCIATED\":\n[\n\"ZETR_DDL_I_EXP_HEAD\"\n],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
+    "SOURCE":"@AccessControl.authorizationCheck: #CHECK\n@EndUserText.label: 'Export Document Header Collocutor'\ndefine view entity ZETR_DDL_I_EXP_collocutor\n  as select from zetr_t_r101\n  association to parent ZETR_DDL_I_EXP_HEAD as _Header on $projection.Filen = _Header.Filen\n\n{\n  key filen as Filen,\n      kunrg as Kunrg,\n      cusof as Cusof,\n      shpfr as Shpfr,\n      brofr as Brofr,\n      cofrp as Cofrp,\n      sfrrp as Sfrrp,\n      bfrrp as Bfrrp,\n      _Header\n}\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"ZETR_T_R101\"\n],\n\"ASSOCIATED\":\n[\n\"ZETR_DDL_I_EXP_HEAD\"\n],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"542",
+    "CHGFLAG":"",
     "SOURCE_TYPE":"W",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"
@@ -78,7 +78,7 @@
     "STRUCOBJN":"ZETR_DDL_I_EXP_COLLOCUTOR",
     "NAME":"ACCESSCONTROL.AUTHORIZATIONCHECK",
     "POSITION":2,
-    "VALUE":"#NOT_REQUIRED"
+    "VALUE":"#CHECK"
    },
    {
     "STRUCOBJN":"ZETR_DDL_I_EXP_COLLOCUTOR",

@@ -50,8 +50,9 @@ CLASS lhc_zetr_ddl_c_costing IMPLEMENTATION.
         <row>-document_no = |{ <row>-document_no ALPHA = IN }|.
       ENDLOOP.
 
+      " Helper lookup: DCL on the child view would silently return 0 rows; authorization of this operation is not checked here.
       SELECT *
-        FROM zetr_ddl_c_exp_invi
+        FROM zetr_ddl_c_exp_invi WITH PRIVILEGED ACCESS
      FOR ALL ENTRIES IN @ls_key-%param-_table
        WHERE vbeln = @ls_key-%param-_table-document_no
         INTO TABLE @DATA(lt_invoice_item).

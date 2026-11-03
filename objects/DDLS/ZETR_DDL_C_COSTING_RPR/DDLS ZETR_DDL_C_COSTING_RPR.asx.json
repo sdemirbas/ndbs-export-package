@@ -9,7 +9,7 @@
     "AS4USER":"SAP_CUSTOMER",
     "AS4DATE":"0000-00-00",
     "AS4TIME":"00:00:00",
-    "SOURCE":"@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'Costing projection view'\r\n@Metadata.allowExtensions: true\r\ndefine view entity ZETR_DDL_C_COSTING_RPR\r\n  as projection on ZETR_DDL_I_COSTING\r\n{\r\n      @OData.property.name: 'filen'\r\n  key filen,\r\n  key CompanyCode,\r\n  key JournalEntry,\r\n  key FiscalYear,\r\n      Erdat,\r\n      Erzet,\r\n      Ernam,\r\n      TransactionCurrency,\r\n      @Semantics: { amount : {currencyCode: 'TransactionCurrency'} }\r\n\r\n      CostTotal,\r\n      @Semantics: { amount : {currencyCode: 'TransactionCurrency'} }\r\n\r\n      TaxTotal,\r\n      @ObjectModel.text.element: [ 'SupplierFullName' ]\r\n      Supplier,\r\n      SupplierFullName,\r\n\r\n\r\n      /* Associations */\r\n      _ExportFile : redirected to parent ZETR_DDL_C_EXP_HEADER\r\n\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"ZETR_DDL_I_COSTING\"\n],\n\"ASSOCIATED\":\n[\n\"ZETR_DDL_C_EXP_HEADER\",\n\"ZETR_DDL_I_EXP_HEAD\"\n],\n\"BASE\":\n[\n\"ZETR_DDL_I_COSTING\"\n],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
+    "SOURCE":"@AccessControl.authorizationCheck: #CHECK\n@EndUserText.label: 'Costing projection view'\n@Metadata.allowExtensions: true\ndefine view entity ZETR_DDL_C_COSTING_RPR\n  as projection on ZETR_DDL_I_COSTING\n{\n      @OData.property.name: 'filen'\n  key filen,\n  key CompanyCode,\n  key JournalEntry,\n  key FiscalYear,\n      Erdat,\n      Erzet,\n      Ernam,\n      TransactionCurrency,\n      @Semantics: { amount : {currencyCode: 'TransactionCurrency'} }\n\n      CostTotal,\n      @Semantics: { amount : {currencyCode: 'TransactionCurrency'} }\n\n      TaxTotal,\n      @ObjectModel.text.element: [ 'SupplierFullName' ]\n      Supplier,\n      SupplierFullName,\n\n\n      /* Associations */\n      _ExportFile : redirected to parent ZETR_DDL_C_EXP_HEADER\n\n}\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"ZETR_DDL_I_COSTING\"\n],\n\"ASSOCIATED\":\n[\n\"ZETR_DDL_C_EXP_HEADER\",\n\"ZETR_DDL_I_EXP_HEAD\"\n],\n\"BASE\":\n[\n\"ZETR_DDL_I_COSTING\"\n],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
     "CHGFLAG":"",
@@ -148,7 +148,7 @@
     "STRUCOBJN":"ZETR_DDL_C_COSTING_RPR",
     "NAME":"ACCESSCONTROL.AUTHORIZATIONCHECK",
     "POSITION":2,
-    "VALUE":"#NOT_REQUIRED"
+    "VALUE":"#CHECK"
    },
    {
     "STRUCOBJN":"ZETR_DDL_C_COSTING_RPR",

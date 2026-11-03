@@ -9,7 +9,7 @@
     "AS4USER":"SAP_CUSTOMER",
     "AS4DATE":"0000-00-00",
     "AS4TIME":"00:00:00",
-    "SOURCE":"@EndUserText.label: 'Export Texts'\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@Metadata.allowExtensions: true\r\ndefine view entity ZETR_DDL_C_EXP_TXT\r\n  as projection on ZETR_DDL_I_EXP_TXT\r\n{\r\n  key filen,\r\n  key Objecttype,\r\n      Text,\r\n      TextName,\r\n      _ExportFile : redirected to parent ZETR_DDL_C_EXP_HEADER\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"ZETR_DDL_I_EXP_TXT\"\n],\n\"ASSOCIATED\":\n[\n\"ZETR_DDL_C_EXP_HEADER\",\n\"ZETR_DDL_I_EXP_HEAD\"\n],\n\"BASE\":\n[\n\"ZETR_DDL_I_EXP_TXT\"\n],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
+    "SOURCE":"@EndUserText.label: 'Export Texts'\n@AccessControl.authorizationCheck: #CHECK\n@Metadata.allowExtensions: true\ndefine view entity ZETR_DDL_C_EXP_TXT\n  as projection on ZETR_DDL_I_EXP_TXT\n{\n  key filen,\n  key Objecttype,\n      Text,\n      TextName,\n      _ExportFile : redirected to parent ZETR_DDL_C_EXP_HEADER\n}\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"ZETR_DDL_I_EXP_TXT\"\n],\n\"ASSOCIATED\":\n[\n\"ZETR_DDL_C_EXP_HEADER\",\n\"ZETR_DDL_I_EXP_HEAD\"\n],\n\"BASE\":\n[\n\"ZETR_DDL_I_EXP_TXT\"\n],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
     "CHGFLAG":"",
@@ -78,7 +78,7 @@
     "STRUCOBJN":"ZETR_DDL_C_EXP_TXT",
     "NAME":"ACCESSCONTROL.AUTHORIZATIONCHECK",
     "POSITION":4,
-    "VALUE":"#NOT_REQUIRED"
+    "VALUE":"#CHECK"
    },
    {
     "STRUCOBJN":"ZETR_DDL_C_EXP_TXT",

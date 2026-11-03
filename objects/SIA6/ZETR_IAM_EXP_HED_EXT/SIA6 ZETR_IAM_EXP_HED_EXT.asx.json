@@ -22,7 +22,7 @@
     "CREATE_USER":"SAP_CUSTOMER",
     "CREATE_TIMESTAMP":"+020240215102301",
     "CHANGE_USER":"SAP_CUSTOMER",
-    "CHANGE_TIMESTAMP":"+020260929075621",
+    "CHANGE_TIMESTAMP":"+020261021110440",
     "RTYPE_MIG_STATUS":"3"
    }
   ]
@@ -33,8 +33,8 @@
   [
    {
     "APP_ID":"ZETR_IAM_EXP_HED_EXT",
-    "UUID":"+hY+u89+H+Gu7CnpgMiraw==",
-    "AUTH_OBJECT":"ZETR_BUK",
+    "UUID":"+hY+u89+H+GwzygvAvLLmw==",
+    "AUTH_OBJECT":"F_BKPF_BUK",
     "AUTH_OBJECT_INST_ID":1,
     "IBS_SOURCE":"",
     "STATUS":"U",
@@ -50,7 +50,7 @@
   [
    {
     "APP_ID":"ZETR_IAM_EXP_HED_EXT",
-    "AUTH_OBJECT":"ZETR_BUK",
+    "AUTH_OBJECT":"F_BKPF_BUK",
     "STATUS":"U"
    }
   ]
@@ -61,9 +61,9 @@
   [
    {
     "APP_ID":"ZETR_IAM_EXP_HED_EXT",
-    "UUID":"+hY+u89+H+Gu+2hFy+cLbg==",
-    "PARENT_ID":"+hY+u89+H+Gu7CnpgMiraw==",
-    "FIELD":"ZETR_BUKRS",
+    "UUID":"+hY+u89+H+Gzp+bHQXMr+g==",
+    "PARENT_ID":"+hY+u89+H+GwzygvAvLLmw==",
+    "FIELD":"BUKRS",
     "LOW_VALUE":"",
     "HIGH_VALUE":"",
     "STATUS":"U",
@@ -71,10 +71,50 @@
    },
    {
     "APP_ID":"ZETR_IAM_EXP_HED_EXT",
-    "UUID":"+hY+u89+H+Gu+2hFy+crbg==",
-    "PARENT_ID":"+hY+u89+H+Gu7CnpgMiraw==",
+    "UUID":"+hY+u89+H+Gzp+bHQXNL+g==",
+    "PARENT_ID":"+hY+u89+H+GwzygvAvLLmw==",
+    "FIELD":"ACTVT",
+    "LOW_VALUE":"01",
+    "HIGH_VALUE":"",
+    "STATUS":"U",
+    "COPIED":""
+   },
+   {
+    "APP_ID":"ZETR_IAM_EXP_HED_EXT",
+    "UUID":"+hY+u89+H+Gzp+bHQXNr+g==",
+    "PARENT_ID":"+hY+u89+H+GwzygvAvLLmw==",
+    "FIELD":"ACTVT",
+    "LOW_VALUE":"02",
+    "HIGH_VALUE":"",
+    "STATUS":"U",
+    "COPIED":""
+   },
+   {
+    "APP_ID":"ZETR_IAM_EXP_HED_EXT",
+    "UUID":"+hY+u89+H+Gzp+bHQXOL+g==",
+    "PARENT_ID":"+hY+u89+H+GwzygvAvLLmw==",
     "FIELD":"ACTVT",
     "LOW_VALUE":"03",
+    "HIGH_VALUE":"",
+    "STATUS":"U",
+    "COPIED":""
+   },
+   {
+    "APP_ID":"ZETR_IAM_EXP_HED_EXT",
+    "UUID":"+hY+u89+H+Gzp+bHQXOr+g==",
+    "PARENT_ID":"+hY+u89+H+GwzygvAvLLmw==",
+    "FIELD":"ACTVT",
+    "LOW_VALUE":"06",
+    "HIGH_VALUE":"",
+    "STATUS":"U",
+    "COPIED":""
+   },
+   {
+    "APP_ID":"ZETR_IAM_EXP_HED_EXT",
+    "UUID":"+hY+u89+H+Gzp+bHQXPL+g==",
+    "PARENT_ID":"+hY+u89+H+GwzygvAvLLmw==",
+    "FIELD":"ACTVT",
+    "LOW_VALUE":"10",
     "HIGH_VALUE":"",
     "STATUS":"U",
     "COPIED":""
@@ -102,23 +142,6 @@
     "LANGU":"E",
     "APP_ID":"ZETR_IAM_EXP_HED_EXT",
     "TEXT":"eSolution - Export"
-   }
-  ]
- },
- {
-  "table":"APS_IAM_W_APP_RT",
-  "data":
-  [
-   {
-    "APP_ID":"ZETR_IAM_EXP_HED_EXT",
-    "RESTRICTION_TYPE_ID":"ZETR_RT_BUKRS",
-    "READ_ACCESS":"X",
-    "WRITE_ACCESS":"X",
-    "F4_ACCESS":"",
-    "INACTIVE":"",
-    "READ_ACCESS_STATUS":"",
-    "WRITE_ACCESS_STATUS":"",
-    "F4_ACCESS_STATUS":""
    }
   ]
  },

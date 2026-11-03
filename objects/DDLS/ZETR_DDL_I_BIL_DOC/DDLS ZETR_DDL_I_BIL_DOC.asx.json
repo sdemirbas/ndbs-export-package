@@ -9,10 +9,10 @@
     "AS4USER":"SAP_CUSTOMER",
     "AS4DATE":"0000-00-00",
     "AS4TIME":"00:00:00",
-    "SOURCE":"@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'Billing document for Export'\r\ndefine view entity ZETR_DDL_I_BIL_DOC\r\n  as select from    zetr_t_r102            as ExportDocumentHeader\r\n    left outer join I_BillingDocumentItem  as _BillingDocumentItem  on _BillingDocumentItem.BillingDocument = ExportDocumentHeader.vbeln\r\n    left outer join I_OutboundDeliveryItem as _OUTBOUNDDELIVERYITEM on _OUTBOUNDDELIVERYITEM.ReferenceSDDocument = _BillingDocumentItem.SalesDocument\r\n\r\n  association to parent ZETR_DDL_I_EXP_HEAD as _ExportFile on $projection.FileExportNo = _ExportFile.Filen\r\n{\r\n\r\n  key ExportDocumentHeader.filen             as FileExportNo,\r\n  key ExportDocumentHeader.vbeln             as FilenDocument,\r\n\r\n      _BillingDocumentItem.SalesDocument     as SalesDocument,\r\n      _OUTBOUNDDELIVERYITEM.OutboundDelivery as OutboundDelivery,\r\n      _BillingDocumentItem.SoldProduct       as SoldProduct,\r\n      _ExportFile\r\n\r\n\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"I_BILLINGDOCUMENTITEM\",\n\"I_OUTBOUNDDELIVERYITEM\",\n\"ZETR_T_R102\"\n],\n\"ASSOCIATED\":\n[\n\"ZETR_DDL_I_EXP_HEAD\"\n],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
+    "SOURCE":"@AccessControl.authorizationCheck: #CHECK\n@EndUserText.label: 'Billing document for Export'\ndefine view entity ZETR_DDL_I_BIL_DOC\n  as select from    zetr_t_r102            as ExportDocumentHeader\n    left outer join I_BillingDocumentItem  as _BillingDocumentItem  on _BillingDocumentItem.BillingDocument = ExportDocumentHeader.vbeln\n    left outer join I_OutboundDeliveryItem as _OUTBOUNDDELIVERYITEM on _OUTBOUNDDELIVERYITEM.ReferenceSDDocument = _BillingDocumentItem.SalesDocument\n\n  association to parent ZETR_DDL_I_EXP_HEAD as _ExportFile on $projection.FileExportNo = _ExportFile.Filen\n{\n\n  key ExportDocumentHeader.filen             as FileExportNo,\n  key ExportDocumentHeader.vbeln             as FilenDocument,\n\n      _BillingDocumentItem.SalesDocument     as SalesDocument,\n      _OUTBOUNDDELIVERYITEM.OutboundDelivery as OutboundDelivery,\n      _BillingDocumentItem.SoldProduct       as SoldProduct,\n      _ExportFile\n\n\n}\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"I_BILLINGDOCUMENTITEM\",\n\"I_OUTBOUNDDELIVERYITEM\",\n\"ZETR_T_R102\"\n],\n\"ASSOCIATED\":\n[\n\"ZETR_DDL_I_EXP_HEAD\"\n],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"4",
+    "CHGFLAG":"",
     "SOURCE_TYPE":"W",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"
@@ -78,7 +78,7 @@
     "STRUCOBJN":"ZETR_DDL_I_BIL_DOC",
     "NAME":"ACCESSCONTROL.AUTHORIZATIONCHECK",
     "POSITION":2,
-    "VALUE":"#NOT_REQUIRED"
+    "VALUE":"#CHECK"
    },
    {
     "STRUCOBJN":"ZETR_DDL_I_BIL_DOC",

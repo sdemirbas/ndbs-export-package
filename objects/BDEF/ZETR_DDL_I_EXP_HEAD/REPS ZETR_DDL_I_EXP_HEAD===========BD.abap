@@ -7,8 +7,8 @@ early numbering
 with unmanaged save
 authorization master ( instance )
 {
-  create;
-  update;
+  create ( precheck );
+  update ( precheck );
   delete;
   field ( readonly ) Filen, Pymty, Clsed, StatusClosed;
   field ( mandatory : create ) Kunrg, Bldat, Bukrs, Expty;

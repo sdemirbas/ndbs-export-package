@@ -9,10 +9,10 @@
     "AS4USER":"SAP_CUSTOMER",
     "AS4DATE":"0000-00-00",
     "AS4TIME":"00:00:00",
-    "SOURCE":"@EndUserText.label: 'Export Document Header Collocutor'\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@Metadata.allowExtensions: true\r\ndefine view entity ZETR_DDL_C_EXP_COLLOCUTOR\r\n  as projection on ZETR_DDL_I_EXP_collocutor\r\n{\r\n  key Filen as FilenCollocutor ,\r\n      Kunrg,\r\n      Cusof,\r\n      Shpfr,\r\n      Brofr,\r\n      Cofrp,\r\n      Sfrrp,\r\n      Bfrrp,\r\n      _Header : redirected to parent ZETR_DDL_C_EXP_HEADER\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"ZETR_DDL_I_EXP_COLLOCUTOR\"\n],\n\"ASSOCIATED\":\n[\n\"ZETR_DDL_C_EXP_HEADER\",\n\"ZETR_DDL_I_EXP_HEAD\"\n],\n\"BASE\":\n[\n\"ZETR_DDL_I_EXP_COLLOCUTOR\"\n],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
+    "SOURCE":"@EndUserText.label: 'Export Document Header Collocutor'\n@AccessControl.authorizationCheck: #CHECK\n@Metadata.allowExtensions: true\ndefine view entity ZETR_DDL_C_EXP_COLLOCUTOR\n  as projection on ZETR_DDL_I_EXP_collocutor\n{\n  key Filen as FilenCollocutor ,\n      Kunrg,\n      Cusof,\n      Shpfr,\n      Brofr,\n      Cofrp,\n      Sfrrp,\n      Bfrrp,\n      _Header : redirected to parent ZETR_DDL_C_EXP_HEADER\n}\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"ZETR_DDL_I_EXP_COLLOCUTOR\"\n],\n\"ASSOCIATED\":\n[\n\"ZETR_DDL_C_EXP_HEADER\",\n\"ZETR_DDL_I_EXP_HEAD\"\n],\n\"BASE\":\n[\n\"ZETR_DDL_I_EXP_COLLOCUTOR\"\n],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"542",
+    "CHGFLAG":"",
     "SOURCE_TYPE":"P",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"
@@ -78,7 +78,7 @@
     "STRUCOBJN":"ZETR_DDL_C_EXP_COLLOCUTOR",
     "NAME":"ACCESSCONTROL.AUTHORIZATIONCHECK",
     "POSITION":4,
-    "VALUE":"#NOT_REQUIRED"
+    "VALUE":"#CHECK"
    },
    {
     "STRUCOBJN":"ZETR_DDL_C_EXP_COLLOCUTOR",

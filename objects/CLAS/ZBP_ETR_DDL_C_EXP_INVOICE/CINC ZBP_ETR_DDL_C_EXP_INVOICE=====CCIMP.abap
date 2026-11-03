@@ -187,7 +187,8 @@ CLASS lhc_zetr_ddl_c_exp_invoice IMPLEMENTATION.
     IF lt_billingdocument[] IS NOT INITIAL.
       READ TABLE lt_billingdocument INTO DATA(ls_bill) INDEX 1.
 
-      SELECT SINGLE FROM zetr_ddl_i_export_invh AS ExportInvoice
+      " Helper lookup: DCL on the child view would silently return 0 rows; authorization of this operation is not checked here.
+      SELECT SINGLE FROM zetr_ddl_i_export_invh WITH PRIVILEGED ACCESS AS ExportInvoice
        INNER JOIN   I_BillingDocumentItem  AS BillingDocumentItem ON BillingDocumentItem~BillingDocument = ExportInvoice~BillingDocument
        INNER JOIN   I_SalesDocumentItem    AS SalesDocumentItem   ON SalesDocumentItem~SalesDocument = BillingDocumentItem~SalesDocument
        INNER JOIN   I_SalesDocument        AS SalesDocument       ON SalesDocument~SalesDocument = SalesDocumentItem~SalesDocument
